@@ -1,0 +1,128 @@
+# Edit this configuration file to define what should be installed on
+# your system. Help is available in the configuration.nix(5) man page, on
+# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
+
+{ config, lib, pkgs, inputs, ... }:
+
+{
+  imports =
+    [
+      # Import hardware configuration
+      ./hardware-configuration.nix
+
+      # Import home manager module
+      inputs.home-manager.nixosModules.default
+
+      # Import user modules
+      ../common/users/jun2040
+    ];
+  
+  # Enable experimental Nix features
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  
+  # Boot loader config (Grub EFI)
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = true;
+    };
+    grub = {
+      enable = true;
+      efiSupport = true;
+      device = "nodev";
+    };
+  };
+
+  # Home Manager
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      "jun2040" = import ../../home/jun2040/home.nix;
+    };
+  };
+
+  # Set hostname
+  networking.hostName = "iris";
+
+  # Set time zone.
+  time.timeZone = "Europe/Zurich";
+
+  # Select internationalisation properties.
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  # Enable VMware Tools
+  virtualisation.vmware.guest.enable = true;
+
+  # Install font
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+  ];
+
+  # Install system packages
+  environment.systemPackages = with pkgs; [
+    neovim
+    git
+  ];
+
+  # Default user shell config
+  users.defaultUserShell = pkgs.zsh;
+
+  # Programs
+  programs.foot = {
+    enable = true;
+    settings = {
+      main = {
+        font = "FiraCode Nerd Font:size=16";
+      };
+    };
+  };
+
+  programs.git = {
+    enable = true;
+    config = {
+      user = {
+        name = "jun2040";
+        email = "isy.junny@gmail.com";
+      };
+      init = {
+        defaultBranch = "main";
+      };
+    };
+  };
+
+  programs.zsh = {
+    enable = true;
+    ohMyZsh = {
+      enable = true;
+      plugins = [ "git" ];
+      theme = "robbyrussell";
+    };
+  };
+
+  # Services
+  # services.cage = {
+  #   enable = true;
+  #   program = "${pkgs.foot}/bin/foot";
+  # };
+
+  systemd.user.services.cage = {
+    enable = true;
+    unitConfig = {
+      Description = "Wayland Kiosk";
+    };
+    serviceConfig = {
+      ExecStart = "${pkgs.cage}/bin/cage foot";
+    };
+    wantedBy = [ "default.target" ];
+  };
+
+  # OpenSSH
+  services.openssh = {
+    enable = true;
+  };
+
+  # Initial system version
+  # DO NOT MODIFY
+  system.stateVersion = "24.11";
+
+}
+
