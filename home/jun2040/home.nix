@@ -46,10 +46,17 @@
     userName = "jun2040";
     userEmail = "isy.junny@gmail.com";
     extraConfig = {
-     init.defaultBranch = "main";
+      init.defaultBranch = "main";
+      safe.directory = "/etc/nixos";
     };
   };
+
   # Zsh
+
+  # Tmux
+  programs.tmux = {
+    enable = true;
+  };
 
   # GUI Environment
   # ---- Basic ----

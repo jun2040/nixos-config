@@ -66,6 +66,26 @@
   # Default user shell config
   users.defaultUserShell = pkgs.zsh;
 
+  # Create user groups
+  users.groups = {
+    nixconfig = {
+      gid = 5000;
+      name = "nixconfig";
+    };
+  };
+
+  systemd.tmpfiles.settings = {
+    "10-mypackage" = {
+      "/etc/nixos" = {
+        Z = {
+	  mode = "0775";
+	  user = "root";
+	  group = "nixconfig";
+	};
+      };
+    };
+  };
+
   # Programs
   programs.foot = {
     enable = true;
@@ -85,6 +105,9 @@
       };
       init = {
         defaultBranch = "main";
+      };
+      safe = {
+        directory = "/etc/nixos";
       };
     };
   };
