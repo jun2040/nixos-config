@@ -74,6 +74,7 @@
     };
   };
 
+  # Set folder permission
   systemd.tmpfiles.settings = {
     "10-mypackage" = {
       "/etc/nixos" = {
@@ -96,21 +97,21 @@
     };
   };
 
-  programs.git = {
-    enable = true;
-    config = {
-      user = {
-        name = "jun2040";
-        email = "isy.junny@gmail.com";
-      };
-      init = {
-        defaultBranch = "main";
-      };
-      safe = {
-        directory = "/etc/nixos";
-      };
-    };
-  };
+  # programs.git = {
+  #   enable = true;
+  #   config = {
+  #     user = {
+  #       name = "jun2040";
+  #       email = "isy.junny@gmail.com";
+  #     };
+  #     init = {
+  #       defaultBranch = "main";
+  #     };
+  #     safe = {
+  #       directory = "/etc/nixos";
+  #     };
+  #   };
+  # };
 
   programs.zsh = {
     enable = true;
