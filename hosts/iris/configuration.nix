@@ -74,6 +74,12 @@
     };
   };
 
+  # Enable polkit
+  security.polkit.enable = true;
+
+  # Enable graphics
+  hardware.graphics.enable = true;
+
   # Set folder permission
   systemd.tmpfiles.settings = {
     "10-mypackage" = {
@@ -97,22 +103,6 @@
     };
   };
 
-  # programs.git = {
-  #   enable = true;
-  #   config = {
-  #     user = {
-  #       name = "jun2040";
-  #       email = "isy.junny@gmail.com";
-  #     };
-  #     init = {
-  #       defaultBranch = "main";
-  #     };
-  #     safe = {
-  #       directory = "/etc/nixos";
-  #     };
-  #   };
-  # };
-
   programs.zsh = {
     enable = true;
     ohMyZsh = {
@@ -123,21 +113,6 @@
   };
 
   # Services
-  # services.cage = {
-  #   enable = true;
-  #   program = "${pkgs.foot}/bin/foot";
-  # };
-
-  systemd.user.services.cage = {
-    enable = true;
-    unitConfig = {
-      Description = "Wayland Kiosk";
-    };
-    serviceConfig = {
-      ExecStart = "${pkgs.cage}/bin/cage foot";
-    };
-    wantedBy = [ "default.target" ];
-  };
 
   # OpenSSH
   services.openssh = {
