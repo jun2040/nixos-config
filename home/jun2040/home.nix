@@ -59,6 +59,16 @@
     enable = true;
   };
 
+  # Foot
+  programs.foot = {
+    enable = true;
+    settings = {
+      main = {
+        font = "FiraCode Nerd Font:size=16";
+      };
+    };
+  };
+
   # Cage
   systemd.user.services.cage = {
     Unit = {

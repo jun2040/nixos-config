@@ -94,14 +94,14 @@
   };
 
   # Programs
-  programs.foot = {
-    enable = true;
-    settings = {
-      main = {
-        font = "FiraCode Nerd Font:size=16";
-      };
-    };
-  };
+  # programs.foot = {
+  #   enable = true;
+  #   settings = {
+  #     main = {
+  #       font = "FiraCode Nerd Font:size=16";
+  #     };
+  #   };
+  # };
 
   programs.zsh = {
     enable = true;
