@@ -34,6 +34,7 @@
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+    pkgs.cage
   ];
 
   # List of Programs
@@ -56,6 +57,19 @@
   # Tmux
   programs.tmux = {
     enable = true;
+  };
+
+  # Cage
+  systemd.user.services.cage = {
+    Unit = {
+      Description = "Wayland Kiosk";
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.cage}/bin/cage ${pkgs.foot}/bin/foot";
+    };
   };
 
   # GUI Environment
