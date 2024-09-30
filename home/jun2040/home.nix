@@ -18,22 +18,6 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
-
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
     pkgs.cage
   ];
 
@@ -57,6 +41,21 @@
   # Tmux
   programs.tmux = {
     enable = true;
+    plugins = [
+	pkgs.tmuxPlugins.catppuccin
+    ];
+    extraConfig = ''
+      # Change prefix
+      unbind C-b
+      set -g prefix C-Space
+      bind C-space send-prefix
+
+      # Vim style navigation
+      bind h select-pane -L
+      bind j select-pane -D
+      bind k select-pane -U
+      bind l select-pane -R
+    '';
   };
 
   # Foot
@@ -69,7 +68,7 @@
     };
   };
 
-  # Cage
+  # Custom systemd service for launching cage on login
   systemd.user.services.cage = {
     Unit = {
       Description = "Wayland Kiosk";
@@ -78,7 +77,7 @@
       WantedBy = [ "default.target" ];
     };
     Service = {
-      ExecStart = "${pkgs.cage}/bin/cage ${pkgs.foot}/bin/foot";
+      ExecStart = "${pkgs.cage}/bin/cage ${pkgs.foot}/bin/foot ${pkgs.tmux}/bin/tmux";
     };
   };
 
