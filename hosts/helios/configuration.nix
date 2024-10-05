@@ -15,10 +15,8 @@
     efi = {
       canTouchEfiVariables = true;
     };
-    grub = {
+    systemd-boot = {
       enable = true;
-      efiSupport = true;
-      device = "nodev";
     };
   };
 
