@@ -18,7 +18,6 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
-    pkgs.cage
   ];
 
   # List of Programs
@@ -58,21 +57,19 @@
     '';
   };
 
-  # Foot
-  programs.foot = {
-    enable = true;
-    settings = {
-      main = {
-        font = "FiraCode Nerd Font:size=16";
-      };
-    };
-  };
-
   programs.alacritty = {
     enable = true;
   };
 
   programs.firefox = {
+    enable = true;
+  };
+
+  programs.fuzzel = {
+    enable = true;
+  };
+
+  programs.waybar = {
     enable = true;
   };
 
@@ -84,6 +81,20 @@
         "$mod, M, exit"
 	"$mod, RETURN, exec, alacritty"
 	"$mod, F, exec, firefox"
+	"$mod, SPACE, exec, fuzzel"
+	
+	"$mod, H, movefocus, l"
+	"$mod, L, movefocus, r"
+	"$mod, K, movefocus, u"
+	"$mod, J, movefocus, d"
+
+	"$mod SHIFT, H, movewindow, l"
+	"$mod SHIFT, L, movewindow, r"
+	"$mod SHIFT, K, movewindow, u"
+	"$mod SHIFT, J, movewindow, d"
+      ];
+      exec-once = [
+        "waybar"
       ];
     };
   };
