@@ -2,12 +2,19 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
+
+      # Import home manager module
+      inputs.home-manager.nixosModules.default
+
+      # Import user modules
+      ../common/users/jun2040
     ];
   
   # Boot loader config (Grub EFI)
@@ -45,8 +52,37 @@
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
+  # Home Manager
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      "jun2040" = import ../../home/jun2040/helios.nix;
+    };
+  };
 
-  
+  # Create user groups
+  users.groups = {
+    nixconfig = {
+      gid = 5000;
+      name = "nixconfig";
+    };
+  };
+
+  # Set folder permission
+  systemd.tmpfiles.settings = {
+    "10-mypackage" = {
+      "/etc/nixos" = {
+        Z = {
+	  mode = "0775";
+	  user = "root";
+	  group = "nixconfig";
+	};
+      };
+    };
+  };
+
+  # Enable polkit
+  security.polkit.enable = true;
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -66,18 +102,11 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
-  # User config
-  users.users.jun2040 = {
-    initialPassword = "1234";
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-    packages = with pkgs; [];
-  };
-
   # Install system packages
   environment.systemPackages = with pkgs; [
     neovim
     git
+    lact
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -87,6 +116,21 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+
+  programs.hyprland.enable = true;
+
+  services.dbus = {
+    enable = true;
+  };
+
+  systemd.services.lact = {
+    enable = true;
+    after = [ "multi-user.target" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      ExecStart = "${pkgs.lact}/bin/lact daemon";
+    };
+  };
 
   # List services that you want to enable:
 
