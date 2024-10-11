@@ -21,20 +21,16 @@
     pkgs.cage
   ];
 
+  # Import modules
+  imports = [
+    ../common/git/jun2040.nix
+  ];
+
   # List of Programs
 
   # All Environment
   # ---- Basic ----
   # Git
-  programs.git = {
-    enable = true;
-    userName = "jun2040";
-    userEmail = "isy.junny@gmail.com";
-    extraConfig = {
-      init.defaultBranch = "main";
-      safe.directory = "/etc/nixos";
-    };
-  };
 
   # Zsh
 
