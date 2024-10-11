@@ -36,7 +36,7 @@
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
     users = {
-      "jun2040" = import ../../home/jun2040/home.nix;
+      "jun2040" = import ../../home/jun2040/iris.nix;
     };
   };
 
