@@ -28,23 +28,15 @@
 
     # Tmux
     ../common/tmux.nix
+
+    # Foot
+    ../common/foot.nix
   ];
 
   # List of Programs
 
   # All Environment
   # ---- Basic ----
-  # Zsh
-
-  # Foot
-  programs.foot = {
-    enable = true;
-    settings = {
-      main = {
-        font = "FiraCode Nerd Font:size=16";
-      };
-    };
-  };
 
   # Custom systemd service for launching cage on login
   systemd.user.services.cage = {
