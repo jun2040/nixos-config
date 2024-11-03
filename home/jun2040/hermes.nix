@@ -26,6 +26,9 @@
 
     # Tmux
     ../common/tmux.nix
+
+    # Hyprland
+    ../common/hyprland
   ];
 
   # List of Programs
@@ -45,53 +48,6 @@
 
   programs.fuzzel = {
     enable = true;
-  };
-
-  programs.waybar = {
-    enable = true;
-    style = ''
-      * {
-        font-family: 'Fira Code';
-      }
-    '';
-    settings =[{
-      height = 30;
-      layer = "top";
-      position = "top";
-      modules-right = [
-        "clock"
-      ];
-      clock = {
-        interval = 1;
-        format = "  {:%H:%M:%S\n%Y\/%m\/%d}";
-      };
-    }];
-  };
-
-  wayland.windowManager.hyprland = {
-    enable = true;
-    settings = {
-      "$mod" = "SUPER";
-      bind = [
-        "$mod, M, exit"
-	"$mod, RETURN, exec, alacritty"
-	"$mod, F, exec, firefox"
-	"$mod, SPACE, exec, fuzzel"
-	
-	"$mod, H, movefocus, l"
-	"$mod, L, movefocus, r"
-	"$mod, K, movefocus, u"
-	"$mod, J, movefocus, d"
-
-	"$mod SHIFT, H, movewindow, l"
-	"$mod SHIFT, L, movewindow, r"
-	"$mod SHIFT, K, movewindow, u"
-	"$mod SHIFT, J, movewindow, d"
-      ];
-      exec-once = [
-        "waybar"
-      ];
-    };
   };
 
   # GUI Environment
