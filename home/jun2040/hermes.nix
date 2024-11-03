@@ -20,42 +20,20 @@
   home.packages = [
   ];
 
+  imports = [
+    # Git
+    ../common/git/jun2040.nix
+
+    # Tmux
+    ../common/tmux.nix
+  ];
+
   # List of Programs
 
   # All Environment
   # ---- Basic ----
-  # Git
-  programs.git = {
-    enable = true;
-    userName = "jun2040";
-    userEmail = "isy.junny@gmail.com";
-    extraConfig = {
-      init.defaultBranch = "main";
-      safe.directory = "/etc/nixos";
-    };
-  };
-
+  
   # Zsh
-
-  # Tmux
-  programs.tmux = {
-    enable = true;
-    plugins = [
-	pkgs.tmuxPlugins.catppuccin
-    ];
-    extraConfig = ''
-      # Change prefix
-      unbind C-b
-      set -g prefix C-Space
-      bind C-space send-prefix
-
-      # Vim style navigation
-      bind h select-pane -L
-      bind j select-pane -D
-      bind k select-pane -U
-      bind l select-pane -R
-    '';
-  };
 
   programs.alacritty = {
     enable = true;
