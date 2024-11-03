@@ -10,7 +10,6 @@
       bind = [
         "$mod, M, exit"
 	"$mod, RETURN, exec, alacritty"
-	"$mod, F, exec, firefox"
 	"$mod, SPACE, exec, fuzzel"
 	
 	"$mod, H, movefocus, l"
