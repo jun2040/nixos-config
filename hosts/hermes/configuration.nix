@@ -2,23 +2,28 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
+
+      # Import home manager module
+      inputs.home-manager.nixosModules.default
+
+      # Import user modules
+      ../common/users/jun2040
     ];
   
-  # Boot loader config (Grub EFI)
+  # Boot loader config (Systemd EFI)
   boot.loader = {
     efi = {
       canTouchEfiVariables = true;
     };
-    grub = {
+    systemd-boot = {
       enable = true;
-      efiSupport = true;
-      device = "nodev";
     };
   };
 
@@ -27,7 +32,7 @@
 
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
   # Set time zone.
   time.timeZone = "Europe/Zurich";
@@ -44,11 +49,44 @@
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [ "FiraCode" ]; })
+  ];
+
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
+  # Home Manager
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      "jun2040" = import ../../home/jun2040/hermes.nix;
+    };
+  };
 
-  
+  # Create user groups
+  users.groups = {
+    nixconfig = {
+      gid = 5000;
+      name = "nixconfig";
+    };
+  };
+
+  # Set folder permission
+  systemd.tmpfiles.settings = {
+    "10-mypackage" = {
+      "/etc/nixos" = {
+        Z = {
+	  mode = "0775";
+	  user = "root";
+	  group = "nixconfig";
+	};
+      };
+    };
+  };
+
+  # Enable polkit
+  security.polkit.enable = true;
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -68,14 +106,6 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
 
-  # User config
-  users.users.jun2040 = {
-    initialPassword = "1234";
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-    packages = with pkgs; [];
-  };
-
   # Install system packages
   environment.systemPackages = with pkgs; [
     neovim
@@ -89,6 +119,12 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+
+  programs.hyprland.enable = true;
+
+  services.dbus = {
+    enable = true;
+  };
 
   # List services that you want to enable:
 
