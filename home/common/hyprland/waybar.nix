@@ -10,6 +10,9 @@
       height = 30;
       layer = "top";
       position = "top";
+      modules-center = [
+        "hyprland/workspaces"
+      ];
       modules-right = [
         "battery"
         "clock"
@@ -29,6 +32,11 @@
         format-plugged = "{capacity}% ";
         format-alt = "{time} {icon}";
 	format-icons = [ " " " " " " " " " " ];
+      };
+      "hyprland/workspaces" = {
+        disable-scroll = true;
+	all-outputs = true;
+	on-click = "activate";
       };
     }];
   };
