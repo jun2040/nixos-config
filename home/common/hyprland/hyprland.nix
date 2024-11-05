@@ -47,6 +47,11 @@
 	disable_hyprland_logo = true;
       };
 
+      env = [
+        "GTK_THEME,Adwaita:dark"
+        "QT_QPA_PLATFORMTHEME,qt6ct" # Qt dark mode
+      ];
+
       exec-once = [
         "waybar"
       ];
