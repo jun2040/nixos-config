@@ -32,6 +32,9 @@
 	"$mod SHIFT, L, movewindow, r"
 	"$mod SHIFT, K, movewindow, u"
 	"$mod SHIFT, J, movewindow, d"
+
+	"$mod, TAB, workspace, +1"
+	"$mod SHIFT, TAB, workspace, -1"
       ]
       ++ (loop 1 9 go_to_workspace)
       ++ (loop 1 9 move_to_workspace);
