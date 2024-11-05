@@ -19,6 +19,7 @@
         "$mod, M, exit"
 	"$mod, RETURN, exec, alacritty"
 	"$mod, SPACE, exec, fuzzel"
+	"$mod, C, killactive"
 	
 	"$mod, H, movefocus, l"
 	"$mod, L, movefocus, r"
