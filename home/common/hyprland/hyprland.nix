@@ -7,6 +7,7 @@
   let
     go_to_workspace = x: [ "$mod, ${toString x}, workspace, ${toString x}" ];
     move_to_workspace = x: [ "$mod SHIFT, ${toString x}, movetoworkspace, ${toString x}" ];
+    set_persistent = x: [ "${toString x}, persistent:true" ];
     loop = i: n: template:
       if i < n
       then (template i) ++ (loop (i + 1) n template)
@@ -15,6 +16,7 @@
     enable = true;
     settings = {
       "$mod" = "SUPER";
+
       bind = [
         "$mod, M, exit"
 	"$mod, RETURN, exec, alacritty"
@@ -33,10 +35,15 @@
       ]
       ++ (loop 1 9 go_to_workspace)
       ++ (loop 1 9 move_to_workspace);
+
+      workspace = []
+      ++ (loop 1 9 set_persistent);
+
       misc = {
         force_default_wallpaper = 0;
 	disable_hyprland_logo = true;
       };
+
       exec-once = [
         "waybar"
       ];
