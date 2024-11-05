@@ -5,6 +5,26 @@
       * {
         font-family: 'Fira Code';
       }
+
+      #workspaces button.active {
+        background: #ff0000;
+      }
+
+      #workspaces button:hover {
+	box-shadow: inherit;
+	text-shadow: inherit;
+      }
+
+      #workspaces button.focused {
+	background: #e88939;
+	background: #00afd7;
+	color: #1b1d1e;
+      }
+
+      #workspaces button.urgent {
+	background: #af005f;
+	color: #1b1d1e;
+      }
     '';
     settings = [{
       height = 30;
