@@ -6,6 +6,10 @@
         font-family: 'Fira Code';
       }
 
+      window#waybar {
+        padding: 3px;
+      }
+
       #workspaces button.active {
         background: #ff0000;
       }
