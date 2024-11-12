@@ -59,6 +59,7 @@
   # Home Manager
   home-manager = {
     extraSpecialArgs = { inherit inputs; };
+    useGlobalPkgs = true;
     users = {
       "jun2040" = import ../../home/jun2040/hermes.nix;
     };
@@ -87,6 +88,9 @@
 
   # Enable polkit
   security.polkit.enable = true;
+
+  # Allow unfree software
+  nixpkgs.config.allowUnfree = true;
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
