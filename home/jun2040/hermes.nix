@@ -19,6 +19,7 @@
   # environment.
   home.packages = with pkgs; [
     obsidian
+    sbctl
   ];
 
   imports = [
