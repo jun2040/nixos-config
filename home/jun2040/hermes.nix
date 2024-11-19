@@ -20,6 +20,7 @@
   home.packages = with pkgs; [
     obsidian
     sbctl
+    gcc
   ];
 
   imports = [
@@ -50,7 +51,7 @@
   programs.fuzzel = {
     enable = true;
   };
-
+  
   # GUI Environment
   # ---- Basic ----
   # Hyprland
@@ -96,6 +97,10 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+    ".config/nvim" = {
+      source = ../common/neovim/custom;
+      recursive = true;
+    };
   };
 
   # Home Manager can also manage your environment variables through
