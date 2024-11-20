@@ -11,6 +11,9 @@
     lua-language-server
     stylua
 
+    java-language-server
+    google-java-format
+
     zathura
     texlive.combined.scheme-full
   ];
