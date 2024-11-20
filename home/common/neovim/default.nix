@@ -10,6 +10,9 @@
 
     lua-language-server
     stylua
+
+    zathura
+    texlive.combined.scheme-full
   ];
 
   home.file = {
