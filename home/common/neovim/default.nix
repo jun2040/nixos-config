@@ -7,6 +7,9 @@
 
   home.packages = with pkgs; [
     gcc
+
+    lua-language-server
+    stylua
   ];
 
   home.file = {
