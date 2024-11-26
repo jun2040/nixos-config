@@ -27,6 +27,8 @@
     };
   };
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Set hostname
   networking.hostName = "hermes";
 
