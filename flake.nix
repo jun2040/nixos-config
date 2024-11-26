@@ -89,7 +89,7 @@
     };
 
     devShells = ({ pkgs }: {
-      default = pkgs.mkShell.override
+      c = pkgs.mkShell.override
         {
           # Override stdenv in order to change compiler:
           # stdenv = pkgs.clangStdenv;
