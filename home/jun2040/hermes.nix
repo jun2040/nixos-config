@@ -37,6 +37,9 @@
 
     # Neovim
     ../common/neovim
+
+    # Cmake
+    ../common/cmake.nix
   ];
 
   # List of Programs
