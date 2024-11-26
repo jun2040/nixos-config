@@ -41,7 +41,7 @@
         modules = [
           ./hosts/hermes/configuration.nix
           inputs.home-manager.nixosModules.default
-	  lanzaboote.nixosModules.lanzaboote({ pkgs, lib, ... }: {
+      	  lanzaboote.nixosModules.lanzaboote({ pkgs, lib, ... }: {
             environment.systemPackages = [
               pkgs.sbctl
             ];
@@ -87,5 +87,27 @@
         ];
       };
     };
+
+    devShells = ({ pkgs }: {
+      default = pkgs.mkShell.override
+        {
+          # Override stdenv in order to change compiler:
+          # stdenv = pkgs.clangStdenv;
+        }
+        {
+          packages = with pkgs; [
+            clang-tools
+            cmake
+            codespell
+            conan
+            cppcheck
+            doxygen
+            gtest
+            lcov
+            vcpkg
+            vcpkg-tool
+          ] ++ (if system == "aarch64-darwin" then [ ] else [ gdb ]);
+        };
+    });
   };
 }
