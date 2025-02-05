@@ -80,10 +80,10 @@
     "10-mypackage" = {
       "/etc/nixos" = {
         Z = {
-	  mode = "0775";
-	  user = "root";
-	  group = "nixconfig";
-	};
+          mode = "0775";
+          user = "root";
+          group = "nixconfig";
+        };
       };
     };
   };
